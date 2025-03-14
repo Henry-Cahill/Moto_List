@@ -1,0 +1,17 @@
+A:\Moto_List\bin\Debug\net8.0-windows\Moto_List.exe
+A:\Moto_List\bin\Debug\net8.0-windows\Moto_List.deps.json
+A:\Moto_List\bin\Debug\net8.0-windows\Moto_List.runtimeconfig.json
+A:\Moto_List\bin\Debug\net8.0-windows\Moto_List.dll
+A:\Moto_List\bin\Debug\net8.0-windows\Moto_List.pdb
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.Form_Authentication.resources
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.csproj.GenerateResource.cache
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.GeneratedMSBuildEditorConfig.editorconfig
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.AssemblyInfoInputs.cache
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.AssemblyInfo.cs
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.csproj.CoreCompileInputs.cache
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.sourcelink.json
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.dll
+A:\Moto_List\obj\Debug\net8.0-windows\refint\Moto_List.dll
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.pdb
+A:\Moto_List\obj\Debug\net8.0-windows\Moto_List.genruntimeconfig.cache
+A:\Moto_List\obj\Debug\net8.0-windows\ref\Moto_List.dll
