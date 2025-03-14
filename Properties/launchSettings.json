@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Moto_List": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

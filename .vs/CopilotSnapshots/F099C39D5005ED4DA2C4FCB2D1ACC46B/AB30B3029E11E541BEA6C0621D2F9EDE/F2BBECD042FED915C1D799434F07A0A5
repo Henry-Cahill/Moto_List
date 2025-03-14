@@ -1,0 +1,258 @@
+﻿using System;
+using System.IO; // Add this for logging
+using Moto_List.Menu2.options;
+
+namespace Moto_List
+{
+   public class Menu
+   {
+      private enum MenuOption
+      {
+         GearBag,
+         Gloves,
+         ChestProtector,
+         NeckBrace,
+         HelmetBag,
+         Helmet,
+         GoggleBag,
+         Goggles,
+         GoggleReplacementLenses,
+         GoggleTearOffs,
+         GoggleRollOffs,
+         GoggleAccessories,
+         KneeBraces,
+         KneeGuards,
+         ElbowGuards,
+         KidneyBelt,
+         RaceBoots,
+         LogOut
+      }
+
+      public void ShowMenu()
+      {
+         Console.Clear();
+         Console.WriteLine("Welcome to Selection Menu");
+         DisplayMenuOptions();
+
+         Console.Write("Please select an option: ");
+         if (Enum.TryParse<MenuOption>(Console.ReadLine(), out var selectedOption))
+         {
+            ExecuteMenuAction(selectedOption);
+         }
+         else
+         {
+            Console.WriteLine("Invalid option. Please try again.");
+            ShowMenu();
+         }
+      }
+
+      private void DisplayMenuOptions()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            Console.WriteLine($"{(int)option}. {option}");
+         }
+      }
+
+      private void ExecuteMenuAction(MenuOption option)
+      {
+         switch (option)
+         {
+            case MenuOption.GearBag:
+               HandleGearBag();
+               break;
+            case MenuOption.Gloves:
+               HandleGloves();
+               break;
+            case MenuOption.ChestProtector:
+               HandleChestProtector();
+               break;
+            case MenuOption.NeckBrace:
+               HandleNeckBrace();
+               break;
+            case MenuOption.HelmetBag:
+               HandleHelmetBag();
+               break;
+            case MenuOption.Helmet:
+               HandleHelmet();
+               break;
+            case MenuOption.GoggleBag:
+               HandleGoggleBag();
+               break;
+            case MenuOption.Goggles:
+               HandleGoggles();
+               break;
+            case MenuOption.GoggleReplacementLenses:
+               HandleGoggleReplacementLenses();
+               break;
+            case MenuOption.GoggleTearOffs:
+               HandleGoggleTearOffs();
+               break;
+            case MenuOption.GoggleRollOffs:
+               HandleGoggleRollOffs();
+               break;
+            case MenuOption.GoggleAccessories:
+               HandleGoggleAccessories();
+               break;
+            case MenuOption.KneeBraces:
+               HandleKneeBraces();
+               break;
+            case MenuOption.KneeGuards:
+               HandleKneeGuards();
+               break;
+            case MenuOption.ElbowGuards:
+               HandleElbowGuards();
+               break;
+            case MenuOption.KidneyBelt:
+               HandleKidneyBelt();
+               break;
+            case MenuOption.RaceBoots:
+               Console.WriteLine("Race Boots");
+               break;
+            case MenuOption.LogOut:
+               MainMenu.ShowMainMenu();
+               break;
+            default:
+               Console.WriteLine("Invalid option. Please try again.");
+               ShowMenu();
+               break;
+         }
+      }
+
+      private void HandleGearBag()
+      {
+         try
+         {
+            Gear_Bag gearBag = new Gear_Bag();
+            Console.WriteLine("Gear Bag selected.");
+            LogSelection("Gear Bag selected.");
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private void HandleGloves()
+      {
+         try
+         {
+            Gloves gloves = new Gloves();
+            Console.WriteLine("Gloves selected.");
+            LogSelection("Gloves selected.");
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private void HandleChestProtector()
+      {
+         Chest_Protector chestProtector = new Chest_Protector();
+         Console.WriteLine("Chest Protector selected.");
+         // Add any additional logic for handling Chest Protector here
+      }
+      private void HandleNeckBrace()
+      {
+         Neck_Brace neckBrace = new Neck_Brace();
+         Console.WriteLine("Neck Brace selected.");
+         // Add any additional logic for handling Neck Brace here
+      }
+      private void HandleHelmetBag()
+      {
+         Helmet_Bag helmetBag = new Helmet_Bag();
+         Console.WriteLine("Helmet Bag selected.");
+         // Add any additional logic for handling Helmet Bag here
+      }
+      private void HandleHelmet()
+      {
+         Helmet helmet = new Helmet();
+         Console.WriteLine("Helmet selected.");
+         // Add any additional logic for handling Helmet here
+      }
+      private void HandleGoggleBag()
+      {
+         Goggle_Bag goggleBag = new Goggle_Bag();
+         Console.WriteLine("Goggle Bag selected.");
+         // Add any additional logic for handling Goggle Bag here
+      }
+      private void HandleGoggles()
+      {
+         Goggles goggles = new Goggles();
+         Console.WriteLine("Goggles selected.");
+         // Add any additional logic for handling Goggles here
+      }
+      private void HandleGoggleReplacementLenses()
+      {
+         Goggle_Replacement_Lenses goggleReplacementLenses = new Goggle_Replacement_Lenses();
+         Console.WriteLine("Goggle Replacement Lenses selected.");
+         // Add any additional logic for handling Goggle Replacement Lenses here
+      }
+      private void HandleGoggleTearOffs()
+      {
+         Goggle_Tear_Offs goggleTearOffs = new Goggle_Tear_Offs();
+         Console.WriteLine("Goggle Tear-Offs selected.");
+         // Add any additional logic for handling Goggle Tear-Offs here
+      }
+      private void HandleGoggleRollOffs()
+      {
+         Goggle_Roll_Offs goggleRollOffs = new Goggle_Roll_Offs();
+         Console.WriteLine("Goggle Roll-Offs");
+         // Add any additional logic for handling Goggle Roll-Offs here
+      }
+      private void HandleGoggleAccessories()
+      {
+         Goggle_Accessories goggleAccessories = new Goggle_Accessories();
+         Console.WriteLine("Goggle Accessories");
+         // Add any additional logic for handling Goggle Accessories here
+      }
+      private void HandleKneeBraces()
+      {
+         KneeBraces kneeBraces = new KneeBraces();
+         Console.WriteLine("Knee Braces");
+         // Add any additional logic for handling Knee Braces here
+      }
+      private void HandleKneeGuards()
+      {
+         KneeGuards kneeGuards = new KneeGuards();
+         Console.WriteLine("Knee Guards");
+         // Add any additional logic for handling Knee Guards here
+      }
+      private void HandleElbowGuards()
+      {
+         ElbowGuards elbowGuards = new ElbowGuards();
+         Console.WriteLine("Elbow Guards");
+         // Add any additional logic for handling Elbow Guards here
+      }
+      private void HandleKidneyBelt()
+      {
+         KidneyBelt kidneyBelt = new KidneyBelt();
+         Console.WriteLine("Kidney Belt");
+         // Add any additional logic for handling Kidney Belt here
+      }
+      private void HandleRaceBoots()
+      {
+         RaceBoots raceBoots = new RaceBoots();
+         Console.WriteLine("Race Boots");
+         // Add any additional logic
+      }
+
+      private void LogSelection(string message)
+      {
+         string logFilePath = "selection_log.txt";
+         using (StreamWriter writer = new StreamWriter(logFilePath, true))
+         {
+            writer.WriteLine($"{DateTime.Now}: {message}");
+         }
+      }
+   }
+}
