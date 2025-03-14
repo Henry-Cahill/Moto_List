@@ -44,12 +44,13 @@ namespace Moto_List
       public void ShowMenu()
       {
          Console.Clear();
+         Console.WriteLine("Welcome to Selection Menu");
          DisplayMenuOptions();
 
          Console.Write("Please select an option: ");
          if (Enum.TryParse<MenuOption>(Console.ReadLine(), out var selectedOption))
          {
-            selectionState[selectedOption] = true; // Save the selection value as true
+            selectionState[selectedOption] = true; // Save the selection value as false
             ExecuteMenuAction(selectedOption);
          }
          else
@@ -61,28 +62,11 @@ namespace Moto_List
 
       private void DisplayMenuOptions()
       {
-         Console.WriteLine("┌─────────────────────────────────────────────┐");
-         Console.WriteLine("│                                             │");
-         Console.WriteLine("│       MOTOCROSS READY – CHECKLIST           │");
-         Console.WriteLine("│           Ride Hard, Ride Safe!             │");
-         Console.WriteLine("│                                             │");
-
-         Console.WriteLine("│       **Rider Gear**                        │");
          foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
          {
-            string status = selectionState[option] ? "[✓]" : "[ ]";
-            Console.WriteLine($"│   {status} • {(int)option}. {option,-32} │");
+            string status = selectionState[option] ? "Selected" : "UnSelected";
+            Console.WriteLine($"{(int)option}. {option,-30} {status}");
          }
-         Console.WriteLine("│                                             │");
-
-         Console.WriteLine("│   [✓] **Bike Pre-Ride Check**               │");
-         Console.WriteLine("│       • Tire Pressure & Tread                │");
-         Console.WriteLine("│       • Chain & Sprocket Condition           │");
-         Console.WriteLine("│       • Brakes & Suspension                  │");
-         Console.WriteLine("│       • Fluid Levels (Oil, Coolant)          │");
-         Console.WriteLine("│       • Battery & Electrical                 │");
-         Console.WriteLine("│                                             │");
-         Console.WriteLine("└─────────────────────────────────────────────┘");
       }
 
       private void ExecuteMenuAction(MenuOption option)

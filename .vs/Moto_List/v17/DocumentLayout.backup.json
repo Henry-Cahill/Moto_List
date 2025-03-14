@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -41,10 +41,6 @@
               "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "selection_log.txt",
@@ -54,8 +50,7 @@
               "RelativeToolTip": "Menu2.options\\selection_log.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-14T01:41:08.892Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-14T01:41:08.892Z"
             },
             {
               "$type": "Document",
@@ -65,7 +60,7 @@
               "RelativeDocumentMoniker": "Menu.cs",
               "ToolTip": "A:\\Moto_List\\Menu.cs",
               "RelativeToolTip": "Menu.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAcwDQAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAcwEkAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-13T21:57:53.632Z",
               "EditorCaption": ""
@@ -80,8 +75,7 @@
               "RelativeToolTip": "Main.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAADEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T20:05:30.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T20:05:30.249Z"
             }
           ]
         }

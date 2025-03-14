@@ -44,6 +44,7 @@ namespace Moto_List
       public void ShowMenu()
       {
          Console.Clear();
+         Console.WriteLine("Welcome to Selection Menu");
          DisplayMenuOptions();
 
          Console.Write("Please select an option: ");
@@ -67,22 +68,28 @@ namespace Moto_List
          Console.WriteLine("│           Ride Hard, Ride Safe!             │");
          Console.WriteLine("│                                             │");
 
-         Console.WriteLine("│       **Rider Gear**                        │");
-         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
-         {
-            string status = selectionState[option] ? "[✓]" : "[ ]";
-            Console.WriteLine($"│   {status} • {(int)option}. {option,-32} │");
-         }
+         Console.WriteLine("│   [✓] **Rider Gear**                        │");
+         Console.WriteLine("│       • Helmet                              │");
+         Console.WriteLine("│       • Goggles                             │");
+         Console.WriteLine("│       • Gloves & Boots                      │");
+         Console.WriteLine("│       • Jacket & Pants                      │");
+         Console.WriteLine("│       • Knee/Elbow Pads                     │");
          Console.WriteLine("│                                             │");
 
          Console.WriteLine("│   [✓] **Bike Pre-Ride Check**               │");
-         Console.WriteLine("│       • Tire Pressure & Tread                │");
-         Console.WriteLine("│       • Chain & Sprocket Condition           │");
-         Console.WriteLine("│       • Brakes & Suspension                  │");
-         Console.WriteLine("│       • Fluid Levels (Oil, Coolant)          │");
-         Console.WriteLine("│       • Battery & Electrical                 │");
+         Console.WriteLine("│       • Tire Pressure & Tread               │");
+         Console.WriteLine("│       • Chain & Sprocket Condition          │");
+         Console.WriteLine("│       • Brakes & Suspension                 │");
+         Console.WriteLine("│       • Fluid Levels (Oil, Coolant)         │");
+         Console.WriteLine("│       • Battery & Electrical                │");
          Console.WriteLine("│                                             │");
          Console.WriteLine("└─────────────────────────────────────────────┘");
+
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            string status = selectionState[option] ? "Selected" : "UnSelected";
+            Console.WriteLine($"{(int)option}. {option,-30} {status}");
+         }
       }
 
       private void ExecuteMenuAction(MenuOption option)
