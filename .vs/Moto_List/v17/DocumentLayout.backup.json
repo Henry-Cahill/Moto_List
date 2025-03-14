@@ -48,9 +48,10 @@
               "RelativeDocumentMoniker": "Menu2.options\\selection_log.txt",
               "ToolTip": "A:\\Moto_List\\Menu2.options\\selection_log.txt",
               "RelativeToolTip": "Menu2.options\\selection_log.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-14T01:41:08.892Z"
+              "WhenOpened": "2025-03-14T19:32:42.151Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -58,9 +59,9 @@
               "Title": "Menu.cs",
               "DocumentMoniker": "A:\\Moto_List\\Menu.cs",
               "RelativeDocumentMoniker": "Menu.cs",
-              "ToolTip": "A:\\Moto_List\\Menu.cs",
-              "RelativeToolTip": "Menu.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAcwEkAAABJAAAAAAAAAA==",
+              "ToolTip": "A:\\Moto_List\\Menu.cs*",
+              "RelativeToolTip": "Menu.cs*",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAawKYAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-13T21:57:53.632Z",
               "EditorCaption": ""
@@ -75,7 +76,8 @@
               "RelativeToolTip": "Main.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAADEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T20:05:30.249Z"
+              "WhenOpened": "2025-03-13T20:05:30.249Z",
+              "EditorCaption": ""
             }
           ]
         }

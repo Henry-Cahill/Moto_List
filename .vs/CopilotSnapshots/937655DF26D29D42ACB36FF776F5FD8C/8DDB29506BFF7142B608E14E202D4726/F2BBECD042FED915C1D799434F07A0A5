@@ -159,19 +159,15 @@ namespace Moto_List
       private async void HandleGearBag()
       {
          try
-         { /// <summary>
-           /// Represents a gear bag for storing motocross gear.
-           /// <summary>
+         {
             Gear_Bag gearBag = new Gear_Bag();
-            // Toggle the selection state
-            selectionState[MenuOption.GearBag] = selectionState[MenuOption.GearBag];
-            
-            if (selectionState[MenuOption.GearBag])
+            selectionState[MenuOption.GearBag] = true;
+            if (selectionState[MenuOption.GearBag] == true)
             {
                Console.WriteLine("Gear Bag selected.");
                await LogSelectionAsync("Gear Bag selected.");
             }
-            else
+            else if (selectionState[MenuOption.GearBag] == false)
             {
                Console.WriteLine("Gear Bag unselected.");
                await LogSelectionAsync("Gear Bag unselected.");
