@@ -1,0 +1,530 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO; // Add this for logging
+using Moto_List.Menu2.options;
+
+namespace Moto_List
+{
+   public class Menu
+   {
+      private enum MenuOption
+      {
+         GearBag,
+         Gloves,
+         ChestProtector,
+         NeckBrace,
+         HelmetBag,
+         Helmet,
+         GoggleBag,
+         Goggles,
+         GoggleReplacementLenses,
+         GoggleTearOffs,
+         GoggleRollOffs,
+         GoggleAccessories,
+         KneeBraces,
+         KneeGuards,
+         ElbowGuards,
+         KidneyBelt,
+         RaceBoots,
+         SelectAll,
+         UnselectAll,
+         LogOut
+      }
+
+      private Dictionary<MenuOption, bool> selectionState = new Dictionary<MenuOption, bool>();
+
+      public Menu()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            selectionState[option] = false;
+         }
+      }
+
+      public void ShowMenu()
+      {
+         Console.Clear();
+         DisplayMenuOptions();
+
+         Console.Write("Please select an option: ");
+         if (Enum.TryParse<MenuOption>(Console.ReadLine(), out var selectedOption))
+         {
+            selectionState[selectedOption] = true; // Save the selection value as true
+            ExecuteMenuAction(selectedOption);
+         }
+         else
+         {
+            Console.WriteLine("Invalid option. Please try again.");
+            ShowMenu();
+         }
+      }
+
+      private void DisplayMenuOptions()
+      {
+         Console.WriteLine("┌─────────────────────────────────────────────┐");
+         Console.WriteLine("│                                             │");
+         Console.WriteLine("│       MOTOCROSS READY – CHECKLIST           │");
+         Console.WriteLine("│           Ride Hard, Ride Safe!             │");
+         Console.WriteLine("│                                             │");
+
+         Console.WriteLine("│       **Rider Gear**                        │");
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            string status = selectionState[option] ? "[✓]" : "[ ]";
+            Console.WriteLine($"│   {status} • {(int)option}. {option,-32} │");
+         }
+         Console.WriteLine("│                                             │");
+
+         Console.WriteLine("│   [✓] **Bike Pre-Ride Check**               │");
+         Console.WriteLine("│       • Tire Pressure & Tread                │");
+         Console.WriteLine("│       • Chain & Sprocket Condition           │");
+         Console.WriteLine("│       • Brakes & Suspension                  │");
+         Console.WriteLine("│       • Fluid Levels (Oil, Coolant)          │");
+         Console.WriteLine("│       • Battery & Electrical                 │");
+         Console.WriteLine("│                                             │");
+         Console.WriteLine("└─────────────────────────────────────────────┘");
+      }
+
+      private void ExecuteMenuAction(MenuOption option)
+      {
+         switch (option)
+         {
+            case MenuOption.GearBag:
+               HandleGearBag();
+               break;
+            case MenuOption.Gloves:
+               HandleGloves();
+               break;
+            case MenuOption.ChestProtector:
+               HandleChestProtector();
+               break;
+            case MenuOption.NeckBrace:
+               HandleNeckBrace();
+               break;
+            case MenuOption.HelmetBag:
+               HandleHelmetBag();
+               break;
+            case MenuOption.Helmet:
+               HandleHelmet();
+               break;
+            case MenuOption.GoggleBag:
+               HandleGoggleBag();
+               break;
+            case MenuOption.Goggles:
+               HandleGoggles();
+               break;
+            case MenuOption.GoggleReplacementLenses:
+               HandleGoggleReplacementLenses();
+               break;
+            case MenuOption.GoggleTearOffs:
+               HandleGoggleTearOffs();
+               break;
+            case MenuOption.GoggleRollOffs:
+               HandleGoggleRollOffs();
+               break;
+            case MenuOption.GoggleAccessories:
+               HandleGoggleAccessories();
+               break;
+            case MenuOption.KneeBraces:
+               HandleKneeBraces();
+               break;
+            case MenuOption.KneeGuards:
+               HandleKneeGuards();
+               break;
+            case MenuOption.ElbowGuards:
+               HandleElbowGuards();
+               break;
+            case MenuOption.KidneyBelt:
+               HandleKidneyBelt();
+               break;
+            case MenuOption.RaceBoots:
+               HandleRaceBoots();
+               break;
+            case MenuOption.SelectAll:
+               SelectAllOptions();
+               break;
+            case MenuOption.UnselectAll:
+               UnselectAllOptions();
+               break;
+            case MenuOption.LogOut:
+               MainMenu.ShowMainMenu();
+               break;
+            default:
+               Console.WriteLine("Invalid option. Please try again.");
+               ShowMenu();
+               break;
+         }
+      }
+
+      private async void HandleGearBag()
+      {
+         try
+         { /// <summary>
+           /// Represents a gear bag for storing motocross gear.
+           /// <summary>
+            Gear_Bag gearBag = new Gear_Bag();
+            // Toggle the selection state
+            selectionState[MenuOption.GearBag] = selectionState[MenuOption.GearBag];
+            
+            if (selectionState[MenuOption.GearBag])
+            {
+               Console.WriteLine("Gear Bag selected.");
+               await LogSelectionAsync("Gear Bag selected.");
+            }
+            else
+            {
+               Console.WriteLine("Gear Bag unselected.");
+               await LogSelectionAsync("Gear Bag unselected.");
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGloves()
+      {
+         try
+         {
+            Gloves gloves = new Gloves();
+            Console.WriteLine("Gloves selected.");
+            await LogSelectionAsync("Gloves selected.");
+            selectionState[MenuOption.Gloves] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleChestProtector()
+      {
+         try
+         {
+            Chest_Protector chestProtector = new Chest_Protector();
+            Console.WriteLine("Chest Protector selected.");
+            await LogSelectionAsync("Chest Protector selected.");
+            selectionState[MenuOption.ChestProtector] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleNeckBrace()
+      {
+         try
+         {
+            Neck_Brace neckBrace = new Neck_Brace();
+            Console.WriteLine("Neck Brace selected.");
+            await LogSelectionAsync("Neck Brace selected.");
+            selectionState[MenuOption.NeckBrace] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleHelmetBag()
+      {
+         try
+         {
+            Helmet_Bag helmetBag = new Helmet_Bag();
+            Console.WriteLine("Helmet Bag selected.");
+            await LogSelectionAsync("Helmet Bag selected.");
+            selectionState[MenuOption.HelmetBag] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleHelmet()
+      {
+         try
+         {
+            Helmet helmet = new Helmet();
+            Console.WriteLine("Helmet selected.");
+            await LogSelectionAsync("Helmet selected.");
+            selectionState[MenuOption.Helmet] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggleBag()
+      {
+         try
+         {
+            Goggle_Bag goggleBag = new Goggle_Bag();
+            Console.WriteLine("Goggle Bag selected.");
+            await LogSelectionAsync("Goggle Bag selected.");
+            selectionState[MenuOption.GoggleBag] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggles()
+      {
+         try
+         {
+            Goggles goggles = new Goggles();
+            Console.WriteLine("Goggles selected.");
+            await LogSelectionAsync("Goggles selected.");
+            selectionState[MenuOption.Goggles] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggleReplacementLenses()
+      {
+         try
+         {
+            Goggle_Replacement_Lenses goggleReplacementLenses = new Goggle_Replacement_Lenses();
+            Console.WriteLine("Goggle Replacement Lenses selected.");
+            await LogSelectionAsync("Goggle Replacement Lenses selected.");
+            selectionState[MenuOption.GoggleReplacementLenses] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggleTearOffs()
+      {
+         try
+         {
+            Goggle_Tear_Offs goggleTearOffs = new Goggle_Tear_Offs();
+            Console.WriteLine("Goggle Tear-Offs selected.");
+            await LogSelectionAsync("Goggle Tear-Offs selected.");
+            selectionState[MenuOption.GoggleTearOffs] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggleRollOffs()
+      {
+         try
+         {
+            Goggle_Roll_Offs goggleRollOffs = new Goggle_Roll_Offs();
+            Console.WriteLine("Goggle Roll-Offs selected.");
+            await LogSelectionAsync("Goggle Roll-Offs selected.");
+            selectionState[MenuOption.GoggleRollOffs] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleGoggleAccessories()
+      {
+         try
+         {
+            Goggle_Accessories goggleAccessories = new Goggle_Accessories();
+            Console.WriteLine("Goggle Accessories selected.");
+            await LogSelectionAsync("Goggle Accessories selected.");
+            selectionState[MenuOption.GoggleAccessories] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleKneeBraces()
+      {
+         try
+         {
+            KneeBraces kneeBraces = new KneeBraces();
+            Console.WriteLine("Knee Braces selected.");
+            await LogSelectionAsync("Knee Braces selected.");
+            selectionState[MenuOption.KneeBraces] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleKneeGuards()
+      {
+         try
+         {
+            KneeGuards kneeGuards = new KneeGuards();
+            Console.WriteLine("Knee Guards selected.");
+            await LogSelectionAsync("Knee Guards selected.");
+            selectionState[MenuOption.KneeGuards] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleElbowGuards()
+      {
+         try
+         {
+            ElbowGuards elbowGuards = new ElbowGuards();
+            Console.WriteLine("Elbow Guards selected.");
+            await LogSelectionAsync("Elbow Guards selected.");
+            selectionState[MenuOption.ElbowGuards] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleKidneyBelt()
+      {
+         try
+         {
+            KidneyBelt kidneyBelt = new KidneyBelt();
+            Console.WriteLine("Kidney Belt selected.");
+            await LogSelectionAsync("Kidney Belt selected.");
+            selectionState[MenuOption.KidneyBelt] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private async void HandleRaceBoots()
+      {
+         try
+         {
+            RaceBoots raceBoots = new RaceBoots();
+            Console.WriteLine("Race Boots selected.");
+            await LogSelectionAsync("Race Boots selected.");
+            selectionState[MenuOption.RaceBoots] = true;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+         finally
+         {
+            ShowMenu();
+         }
+      }
+
+      private void SelectAllOptions()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            selectionState[option] = true;
+         }
+         Console.WriteLine("All options have been selected.");
+         ShowMenu();
+      }
+
+      private void UnselectAllOptions()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            selectionState[option] = false;
+         }
+         Console.WriteLine("All options have been unselected.");
+         ShowMenu();
+      }
+
+      private async Task LogSelectionAsync(string message)
+      {
+         string logFilePath = "A:\\Moto_List\\Menu2.options\\selection_log.txt"; // Update the file path
+         try
+         {
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+               await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"Failed to log selection: {ex.Message}");
+         }
+      }
+   }
+}

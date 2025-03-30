@@ -10,14 +10,14 @@
         "projectUniqueName": "A:\\Moto_List\\Moto_List.csproj",
         "projectName": "Moto_List",
         "projectPath": "A:\\Moto_List\\Moto_List.csproj",
-        "packagesPath": "C:\\Users\\HenryCahill\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\hlcma\\.nuget\\packages\\",
         "outputPath": "A:\\Moto_List\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HenryCahill\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hlcma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

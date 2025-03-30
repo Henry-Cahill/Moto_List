@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // Add this for Dictionary
 using System.IO; // Add this for logging
-using Moto_List.Menu2.options;
+using System.Linq; // Add this for ToDictionary
+using Moto_List.Menu2.options; // Ensure this is the correct namespace
 
 namespace Moto_List
 {
    public class Menu
    {
-      private enum MenuOption
+      public enum MenuOption
       {
          GearBag,
          Gloves,
@@ -31,23 +32,20 @@ namespace Moto_List
          LogOut
       }
 
-      private Dictionary<MenuOption, bool> selectionState = new Dictionary<MenuOption, bool>();
+      Dictionary<MenuOption, bool> selectionState = Enum.GetValues(typeof(MenuOption))
+    .Cast<MenuOption>()
+    .ToDictionary(option => option, option => false);
 
-      public Menu()
-      {
-         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
-         {
-            selectionState[option] = false;
-         }
-      }
 
       public void ShowMenu()
       {
          Console.Clear();
-         DisplayMenuOptions();
+         DisplayMenuOptions.Show(selectionState.ToDictionary(entry => entry.Key, entry => entry.Value));
 
          Console.Write("Please select an option: ");
-         if (Enum.TryParse<MenuOption>(Console.ReadLine(), out var selectedOption))
+         string input = Console.ReadLine();
+
+         if (Enum.TryParse<MenuOption>(input, out var selectedOption) && Enum.IsDefined(typeof(MenuOption), selectedOption))
          {
             selectionState[selectedOption] = true; // Save the selection value as true
             ExecuteMenuAction(selectedOption);
@@ -55,35 +53,13 @@ namespace Moto_List
          else
          {
             Console.WriteLine("Invalid option. Please try again.");
+            // Wait for user input before showing the menu again
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
             ShowMenu();
          }
       }
 
-      private void DisplayMenuOptions()
-      {
-         Console.WriteLine("┌─────────────────────────────────────────────┐");
-         Console.WriteLine("│                                             │");
-         Console.WriteLine("│       MOTOCROSS READY – CHECKLIST           │");
-         Console.WriteLine("│           Ride Hard, Ride Safe!             │");
-         Console.WriteLine("│                                             │");
-
-         Console.WriteLine("│       **Rider Gear**                        │");
-         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
-         {
-            string status = selectionState[option] ? "[✓]" : "[ ]";
-            Console.WriteLine($"│   {status} • {(int)option}. {option,-32} │");
-         }
-         Console.WriteLine("│                                             │");
-
-         Console.WriteLine("│   [✓] **Bike Pre-Ride Check**               │");
-         Console.WriteLine("│       • Tire Pressure & Tread                │");
-         Console.WriteLine("│       • Chain & Sprocket Condition           │");
-         Console.WriteLine("│       • Brakes & Suspension                  │");
-         Console.WriteLine("│       • Fluid Levels (Oil, Coolant)          │");
-         Console.WriteLine("│       • Battery & Electrical                 │");
-         Console.WriteLine("│                                             │");
-         Console.WriteLine("└─────────────────────────────────────────────┘");
-      }
 
       private void ExecuteMenuAction(MenuOption option)
       {
@@ -159,13 +135,11 @@ namespace Moto_List
       private async void HandleGearBag()
       {
          try
-         { /// <summary>
-           /// Represents a gear bag for storing motocross gear.
-           /// <summary>
+         {
             Gear_Bag gearBag = new Gear_Bag();
             // Toggle the selection state
-            selectionState[MenuOption.GearBag] = selectionState[MenuOption.GearBag];
-            
+            selectionState[MenuOption.GearBag] = !selectionState[MenuOption.GearBag];
+
             if (selectionState[MenuOption.GearBag])
             {
                Console.WriteLine("Gear Bag selected.");
@@ -192,9 +166,19 @@ namespace Moto_List
          try
          {
             Gloves gloves = new Gloves();
-            Console.WriteLine("Gloves selected.");
-            await LogSelectionAsync("Gloves selected.");
-            selectionState[MenuOption.Gloves] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.Gloves] = !selectionState[MenuOption.Gloves];
+
+            if (selectionState[MenuOption.Gloves])
+            {
+               Console.WriteLine("Gloves selected.");
+               await LogSelectionAsync("Gloves selected.");
+            }
+            else
+            {
+               Console.WriteLine("Gloves unselected.");
+               await LogSelectionAsync("Gloves unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -211,9 +195,19 @@ namespace Moto_List
          try
          {
             Chest_Protector chestProtector = new Chest_Protector();
-            Console.WriteLine("Chest Protector selected.");
-            await LogSelectionAsync("Chest Protector selected.");
-            selectionState[MenuOption.ChestProtector] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.ChestProtector] = !selectionState[MenuOption.ChestProtector];
+
+            if (selectionState[MenuOption.ChestProtector])
+            {
+               Console.WriteLine("Chest Protector selected.");
+               await LogSelectionAsync("Chest Protector selected.");
+            }
+            else
+            {
+               Console.WriteLine("Chest Protector unselected.");
+               await LogSelectionAsync("Chest Protector unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -230,9 +224,19 @@ namespace Moto_List
          try
          {
             Neck_Brace neckBrace = new Neck_Brace();
-            Console.WriteLine("Neck Brace selected.");
-            await LogSelectionAsync("Neck Brace selected.");
-            selectionState[MenuOption.NeckBrace] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.NeckBrace] = !selectionState[MenuOption.NeckBrace];
+
+            if (selectionState[MenuOption.NeckBrace])
+            {
+               Console.WriteLine("Neck Brace selected.");
+               await LogSelectionAsync("Neck Brace selected.");
+            }
+            else
+            {
+               Console.WriteLine("Neck Brace unselected.");
+               await LogSelectionAsync("Neck Brace unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -249,9 +253,19 @@ namespace Moto_List
          try
          {
             Helmet_Bag helmetBag = new Helmet_Bag();
-            Console.WriteLine("Helmet Bag selected.");
-            await LogSelectionAsync("Helmet Bag selected.");
-            selectionState[MenuOption.HelmetBag] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.HelmetBag] = !selectionState[MenuOption.HelmetBag];
+
+            if (selectionState[MenuOption.HelmetBag])
+            {
+               Console.WriteLine("Helmet Bag selected.");
+               await LogSelectionAsync("Helmet Bag selected.");
+            }
+            else
+            {
+               Console.WriteLine("Helmet Bag unselected.");
+               await LogSelectionAsync("Helmet Bag unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -268,9 +282,19 @@ namespace Moto_List
          try
          {
             Helmet helmet = new Helmet();
-            Console.WriteLine("Helmet selected.");
-            await LogSelectionAsync("Helmet selected.");
-            selectionState[MenuOption.Helmet] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.Helmet] = !selectionState[MenuOption.Helmet];
+
+            if (selectionState[MenuOption.Helmet])
+            {
+               Console.WriteLine("Helmet selected.");
+               await LogSelectionAsync("Helmet selected.");
+            }
+            else
+            {
+               Console.WriteLine("Helmet unselected.");
+               await LogSelectionAsync("Helmet unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -287,9 +311,19 @@ namespace Moto_List
          try
          {
             Goggle_Bag goggleBag = new Goggle_Bag();
-            Console.WriteLine("Goggle Bag selected.");
-            await LogSelectionAsync("Goggle Bag selected.");
-            selectionState[MenuOption.GoggleBag] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.GoggleBag] = !selectionState[MenuOption.GoggleBag];
+
+            if (selectionState[MenuOption.GoggleBag])
+            {
+               Console.WriteLine("Goggle Bag selected.");
+               await LogSelectionAsync("Goggle Bag selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggle Bag unselected.");
+               await LogSelectionAsync("Goggle Bag unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -306,9 +340,19 @@ namespace Moto_List
          try
          {
             Goggles goggles = new Goggles();
-            Console.WriteLine("Goggles selected.");
-            await LogSelectionAsync("Goggles selected.");
-            selectionState[MenuOption.Goggles] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.Goggles] = !selectionState[MenuOption.Goggles];
+
+            if (selectionState[MenuOption.Goggles])
+            {
+               Console.WriteLine("Goggles selected.");
+               await LogSelectionAsync("Goggles selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggles unselected.");
+               await LogSelectionAsync("Goggles unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -325,9 +369,19 @@ namespace Moto_List
          try
          {
             Goggle_Replacement_Lenses goggleReplacementLenses = new Goggle_Replacement_Lenses();
-            Console.WriteLine("Goggle Replacement Lenses selected.");
-            await LogSelectionAsync("Goggle Replacement Lenses selected.");
-            selectionState[MenuOption.GoggleReplacementLenses] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.GoggleReplacementLenses] = !selectionState[MenuOption.GoggleReplacementLenses];
+
+            if (selectionState[MenuOption.GoggleReplacementLenses])
+            {
+               Console.WriteLine("Goggle Replacement Lenses selected.");
+               await LogSelectionAsync("Goggle Replacement Lenses selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggle Replacement Lenses unselected.");
+               await LogSelectionAsync("Goggle Replacement Lenses unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -344,9 +398,19 @@ namespace Moto_List
          try
          {
             Goggle_Tear_Offs goggleTearOffs = new Goggle_Tear_Offs();
-            Console.WriteLine("Goggle Tear-Offs selected.");
-            await LogSelectionAsync("Goggle Tear-Offs selected.");
-            selectionState[MenuOption.GoggleTearOffs] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.GoggleTearOffs] = !selectionState[MenuOption.GoggleTearOffs];
+
+            if (selectionState[MenuOption.GoggleTearOffs])
+            {
+               Console.WriteLine("Goggle Tear-Offs selected.");
+               await LogSelectionAsync("Goggle Tear-Offs selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggle Tear-Offs unselected.");
+               await LogSelectionAsync("Goggle Tear-Offs unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -363,9 +427,19 @@ namespace Moto_List
          try
          {
             Goggle_Roll_Offs goggleRollOffs = new Goggle_Roll_Offs();
-            Console.WriteLine("Goggle Roll-Offs selected.");
-            await LogSelectionAsync("Goggle Roll-Offs selected.");
-            selectionState[MenuOption.GoggleRollOffs] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.GoggleRollOffs] = !selectionState[MenuOption.GoggleRollOffs];
+
+            if (selectionState[MenuOption.GoggleRollOffs])
+            {
+               Console.WriteLine("Goggle Roll-Offs selected.");
+               await LogSelectionAsync("Goggle Roll-Offs selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggle Roll-Offs unselected.");
+               await LogSelectionAsync("Goggle Roll-Offs unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -382,9 +456,19 @@ namespace Moto_List
          try
          {
             Goggle_Accessories goggleAccessories = new Goggle_Accessories();
-            Console.WriteLine("Goggle Accessories selected.");
-            await LogSelectionAsync("Goggle Accessories selected.");
-            selectionState[MenuOption.GoggleAccessories] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.GoggleAccessories] = !selectionState[MenuOption.GoggleAccessories];
+
+            if (selectionState[MenuOption.GoggleAccessories])
+            {
+               Console.WriteLine("Goggle Accessories selected.");
+               await LogSelectionAsync("Goggle Accessories selected.");
+            }
+            else
+            {
+               Console.WriteLine("Goggle Accessories unselected.");
+               await LogSelectionAsync("Goggle Accessories unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -396,14 +480,25 @@ namespace Moto_List
          }
       }
 
+
       private async void HandleKneeBraces()
       {
          try
          {
             KneeBraces kneeBraces = new KneeBraces();
-            Console.WriteLine("Knee Braces selected.");
-            await LogSelectionAsync("Knee Braces selected.");
-            selectionState[MenuOption.KneeBraces] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.KneeBraces] = !selectionState[MenuOption.KneeBraces];
+
+            if (selectionState[MenuOption.KneeBraces])
+            {
+               Console.WriteLine("Knee Braces selected.");
+               await LogSelectionAsync("Knee Braces selected.");
+            }
+            else
+            {
+               Console.WriteLine("Knee Braces unselected.");
+               await LogSelectionAsync("Knee Braces unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -420,9 +515,19 @@ namespace Moto_List
          try
          {
             KneeGuards kneeGuards = new KneeGuards();
-            Console.WriteLine("Knee Guards selected.");
-            await LogSelectionAsync("Knee Guards selected.");
-            selectionState[MenuOption.KneeGuards] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.KneeGuards] = !selectionState[MenuOption.KneeGuards];
+
+            if (selectionState[MenuOption.KneeGuards])
+            {
+               Console.WriteLine("Knee Guards selected.");
+               await LogSelectionAsync("Knee Guards selected.");
+            }
+            else
+            {
+               Console.WriteLine("Knee Guards unselected.");
+               await LogSelectionAsync("Knee Guards unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -439,9 +544,19 @@ namespace Moto_List
          try
          {
             ElbowGuards elbowGuards = new ElbowGuards();
-            Console.WriteLine("Elbow Guards selected.");
-            await LogSelectionAsync("Elbow Guards selected.");
-            selectionState[MenuOption.ElbowGuards] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.ElbowGuards] = !selectionState[MenuOption.ElbowGuards];
+
+            if (selectionState[MenuOption.ElbowGuards])
+            {
+               Console.WriteLine("Elbow Guards selected.");
+               await LogSelectionAsync("Elbow Guards selected.");
+            }
+            else
+            {
+               Console.WriteLine("Elbow Guards unselected.");
+               await LogSelectionAsync("Elbow Guards unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -458,9 +573,19 @@ namespace Moto_List
          try
          {
             KidneyBelt kidneyBelt = new KidneyBelt();
-            Console.WriteLine("Kidney Belt selected.");
-            await LogSelectionAsync("Kidney Belt selected.");
-            selectionState[MenuOption.KidneyBelt] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.KidneyBelt] = !selectionState[MenuOption.KidneyBelt];
+
+            if (selectionState[MenuOption.KidneyBelt])
+            {
+               Console.WriteLine("Kidney Belt selected.");
+               await LogSelectionAsync("Kidney Belt selected.");
+            }
+            else
+            {
+               Console.WriteLine("Kidney Belt unselected.");
+               await LogSelectionAsync("Kidney Belt unselected.");
+            }
          }
          catch (Exception ex)
          {
@@ -477,9 +602,19 @@ namespace Moto_List
          try
          {
             RaceBoots raceBoots = new RaceBoots();
-            Console.WriteLine("Race Boots selected.");
-            await LogSelectionAsync("Race Boots selected.");
-            selectionState[MenuOption.RaceBoots] = true;
+            // Toggle the selection state
+            selectionState[MenuOption.RaceBoots] = !selectionState[MenuOption.RaceBoots];
+
+            if (selectionState[MenuOption.RaceBoots])
+            {
+               Console.WriteLine("Race Boots selected.");
+               await LogSelectionAsync("Race Boots selected.");
+            }
+            else
+            {
+               Console.WriteLine("Race Boots unselected.");
+               await LogSelectionAsync("Race Boots unselected.");
+            }
          }
          catch (Exception ex)
          {
