@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
+using static Moto_List.Menu2.List;
+using static Moto_List.Menu2.Menu;
+
+namespace Moto_List.Menu2
+{
+   /// <summary>
+   /// Provides functionality to display menu options.
+   /// </summary>
+   public class MenuDisplay : IMenuDisplay
+   {
+      private const string Border = "┌─────────────────────────────────┐";
+      private const string Title = "│   MOTOCROSS READY - CHECKLIST   │";
+      private const string Subtitle = "│      Ride Hard, Ride Safe!      │";
+      private const string EmptyLine = "│                                 │";
+      private const string RiderGear = "│         **Rider Gear**          │";
+      private const string BikePreRideCheck = "│   [✓] **Bike Pre-Ride Check**   │";
+      private static readonly string[] BikePreRideCheckItems =
+      {
+            "│ - Tire Pressure & Tread         │",
+            "│ - Chain & Sprocket Condition    │",
+            "│ - Brakes & Suspension           │",
+            "│ - Fluid Levels (Oil, Coolant)   │",
+            "│ - Battery & Electrical          │"
+        };
+
+      private readonly IConfiguration _configuration;
+
+      /// <summary>
+      /// Initializes a new instance of the <see cref="MenuDisplay"/> class.
+      /// </summary>
+      /// <param name="configuration">The configuration instance to use for retrieving settings.</param>
+      public MenuDisplay(IConfiguration configuration)
+      {
+         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+      }
+
+      /// <summary>
+      /// Displays the main menu options.
+      /// </summary>
+      /// <param name="selectionState">The selection state dictionary.</param>
+      public void DisplayMainMenuOptions(Dictionary<MenuOption, bool> selectionState)
+      {
+         if (selectionState == null)
+         {
+            throw new ArgumentNullException(nameof(selectionState));
+         }
+
+         var mainMenuOptions = selectionState
+             .Where(entry => entry.Key != MenuOption.AdminMenu && entry.Key != MenuOption.LogOut)
+             .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+         string filePath = _configuration["MenuOptionsFilePath"];
+         if (string.IsNullOrWhiteSpace(filePath))
+         {
+            throw new InvalidOperationException("MenuOptionsFilePath configuration is missing or empty.");
+         }
+
+         DisplayMenuOptions.Show(mainMenuOptions, filePath);
+         DisplayMenuOptionsInConsole(mainMenuOptions);
+      }
+
+      /// <summary>
+      /// Displays the admin and logout options.
+      /// </summary>
+      public void DisplayAdminLogoutOptions()
+      {
+         Console.WriteLine();
+         Console.WriteLine("Admin and Logout Options:");
+         Console.WriteLine($"{(int)MenuOption.AdminMenu}. AdminMenu");
+         Console.WriteLine($"{(int)MenuOption.LogOut}. LogOut");
+      }
+
+      private void DisplayMenuOptionsInConsole(Dictionary<MenuOption, bool> mainMenuOptions)
+      {
+         Console.WriteLine(Border);
+         Console.WriteLine(Title);
+         Console.WriteLine(Subtitle);
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(RiderGear);
+
+         foreach (var option in mainMenuOptions)
+         {
+            string status = option.Value ? "[✓]" : "[ ]";
+            Console.WriteLine($"│ {status} {(int)option.Key}. {option.Key.ToString().PadRight(25)}│");
+         }
+
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(BikePreRideCheck);
+         foreach (var item in BikePreRideCheckItems)
+         {
+            Console.WriteLine(item);
+         }
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(Border);
+         Console.WriteLine();
+         Console.WriteLine("Admin and Logout Options:");
+         Console.WriteLine($"{(int)MenuOption.AdminMenu}. Admin Menu");
+         Console.WriteLine($"{(int)MenuOption.LogOut}. Log Out");
+      }
+   }
+}

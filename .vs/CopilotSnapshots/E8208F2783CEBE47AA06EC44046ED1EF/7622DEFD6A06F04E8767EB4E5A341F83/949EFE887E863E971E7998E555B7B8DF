@@ -1,0 +1,73 @@
+﻿using System.Threading.Tasks;
+using System;
+using System.IO;
+
+namespace Moto_List
+{
+   public interface IAuthService
+   {
+      Task<bool> Authenticate(string username, string password);
+      Task<bool> SetAuthenticationState(bool isAuthenticated);
+      Task LogOut(); // Add LogOut method to the interface
+   }
+
+   public class AuthService : IAuthService
+   {
+      public bool _isAuthenticated;
+
+      public async Task<bool> Authenticate(string username, string password)
+      {
+         // Simulate authentication logic
+         await Task.Delay(100); // Simulate async work
+         _isAuthenticated = username == "admin" && password == "password";
+         return _isAuthenticated;
+      }
+
+      public async Task<bool> SetAuthenticationState(bool isAuthenticated)
+      {
+         await Task.Delay(50); // Simulate async work
+         _isAuthenticated = isAuthenticated;
+         return _isAuthenticated;
+      }
+
+      public async Task LogOut()
+      {
+         try
+         {
+            await Task.Run(() => Console.WriteLine("Logging out..."));
+            await LogToFileAsync("Logging out...");
+
+            await Task.Delay(1000); // Optional: Add a delay to simulate logging out process
+
+            // Force re-authentication by setting the authentication value to false
+            bool isAuthenticated = await SetAuthenticationState(false);
+
+            if (isAuthenticated)
+            {
+               await Task.Run(() => Console.WriteLine("User successfully logged out."));
+               await LogToFileAsync("User successfully logged out.");
+            }
+            else
+            {
+               await Task.Run(() => Console.WriteLine("Authentication failed. Cannot log out."));
+               await LogToFileAsync("Authentication failed during log out.");
+            }
+         }
+         catch (Exception ex)
+         {
+            await Task.Run(() => Console.WriteLine($"An error occurred during log out: {ex.Message}"));
+            await LogToFileAsync($"Error during log out: {ex.Message}");
+         }
+      }
+
+      private async Task LogToFileAsync(string message)
+      {
+         string logFilePath = "A:\\Moto_List\\logout_log.txt";
+         using (StreamWriter writer = new StreamWriter(logFilePath, append: true))
+         {
+            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+         }
+      }
+   }
+}
+

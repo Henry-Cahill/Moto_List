@@ -1,0 +1,158 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Moto_List
+{
+   public class Menu
+   {
+      public enum MenuOption
+      {
+         GearBag,
+         Gloves,
+         ChestProtector,
+         NeckBrace,
+         HelmetBag,
+         Helmet,
+         GoggleBag,
+         Goggles,
+         GoggleReplacementLenses,
+         GoggleTearOffs,
+         GoggleRollOffs,
+         GoggleAccessories,
+         KneeBraces,
+         KneeGuards,
+         ElbowGuards,
+         KidneyBelt,
+         RaceBoots,
+         SelectAll,
+         UnselectAll,
+         LogOut
+      }
+
+      Dictionary<MenuOption, bool> selectionState = Enum.GetValues(typeof(MenuOption))
+         .Cast<MenuOption>()
+         .ToDictionary(option => option, option => false);
+
+      public async Task ShowMenu()
+      {
+         while (true)
+         {
+            Console.Clear();
+            DisplayMenuOptions.Show(selectionState.ToDictionary(entry => entry.Key, entry => entry.Value));
+
+            Console.Write("Please select an option: ");
+            string input = Console.ReadLine();
+
+            if (Enum.TryParse<MenuOption>(input, out var selectedOption) && Enum.IsDefined(typeof(MenuOption), selectedOption))
+            {
+               await ExecuteMenuAction(selectedOption);
+            }
+            else
+            {
+               Console.WriteLine("Invalid option. Please try again.");
+               Console.WriteLine("Press any key to continue...");
+               Console.ReadKey();
+            }
+         }
+      }
+
+      private async Task ExecuteMenuAction(MenuOption option)
+      {
+         switch (option)
+         {
+            case MenuOption.GearBag:
+            case MenuOption.Gloves:
+            case MenuOption.ChestProtector:
+            case MenuOption.NeckBrace:
+            case MenuOption.HelmetBag:
+            case MenuOption.Helmet:
+            case MenuOption.GoggleBag:
+            case MenuOption.Goggles:
+            case MenuOption.GoggleReplacementLenses:
+            case MenuOption.GoggleTearOffs:
+            case MenuOption.GoggleRollOffs:
+            case MenuOption.GoggleAccessories:
+            case MenuOption.KneeBraces:
+            case MenuOption.KneeGuards:
+            case MenuOption.ElbowGuards:
+            case MenuOption.KidneyBelt:
+            case MenuOption.RaceBoots:
+               await HandleOption(option);
+               break;
+            case MenuOption.SelectAll:
+               SelectAllOptions();
+               break;
+            case MenuOption.UnselectAll:
+               UnselectAllOptions();
+               break;
+            case MenuOption.LogOut:
+               await MainMenu.ShowMainMenu();
+               break;
+            default:
+               Console.WriteLine("Invalid option. Please try again.");
+               break;
+         }
+      }
+
+      private async Task HandleOption(MenuOption option)
+      {
+         try
+         {
+            // Toggle the selection state
+            selectionState[option] = !selectionState[option];
+
+            if (selectionState[option])
+            {
+               Console.WriteLine($"{option} selected.");
+               await LogSelectionAsync($"{option} selected.");
+            }
+            else
+            {
+               Console.WriteLine($"{option} unselected.");
+               await LogSelectionAsync($"{option} unselected.");
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+      }
+
+      private void SelectAllOptions()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            selectionState[option] = true;
+         }
+         Console.WriteLine("All options have been selected.");
+      }
+
+      private void UnselectAllOptions()
+      {
+         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+         {
+            selectionState[option] = false;
+         }
+         Console.WriteLine("All options have been unselected.");
+      }
+
+      private async Task LogSelectionAsync(string message)
+      {
+         string logFilePath = "A:\\Moto_List\\Menu2.options\\selection_log.txt"; // Update the file path
+         try
+         {
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+               await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"Failed to log selection: {ex.Message}");
+         }
+      }
+   }
+}

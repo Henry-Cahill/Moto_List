@@ -1,0 +1,143 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Moto_List;
+using Moto_List.Menu2;
+using Moto_List.Moto_List;
+using static Moto_List.Handle;
+using static Moto_List.Log;
+using static Moto_List.Menu2.List;
+using static Moto_List.Menu2.Menu;
+
+namespace Moto_List.Menu2
+{
+   public class ExeMenuAction
+   {
+      private readonly IHandleOption _handle;
+      private readonly Dictionary<MenuOption, bool> _selectionState;
+      private readonly ILog _log;
+      private readonly Dictionary<MenuOption, Func<Task>> _menuActions;
+      private readonly AdminMenu _adminMenu;
+      private readonly IAuthService _authService;
+
+      public ExeMenuAction(IHandleOption handle, Dictionary<MenuOption, bool> selectionState, ILog log, IAuthService authService)
+      {
+         _handle = handle;
+         _selectionState = selectionState;
+         _log = log;
+         _adminMenu = new AdminMenu(log);
+         _authService = authService;
+         _menuActions = InitializeMenuActions();
+      }
+
+      private Dictionary<MenuOption, Func<Task>> InitializeMenuActions()
+      {
+         return new Dictionary<MenuOption, Func<Task>>
+         {
+            { MenuOption.GearBag, () => HandleOption(MenuOption.GearBag) },
+            { MenuOption.Gloves, () => HandleOption(MenuOption.Gloves) },
+            { MenuOption.ChestProtector, () => HandleOption(MenuOption.ChestProtector) },
+            { MenuOption.NeckBrace, () => HandleOption(MenuOption.NeckBrace) },
+            { MenuOption.HelmetBag, () => HandleOption(MenuOption.HelmetBag) },
+            { MenuOption.Helmet, () => HandleOption(MenuOption.Helmet) },
+            { MenuOption.GoggleBag, () => HandleOption(MenuOption.GoggleBag) },
+            { MenuOption.Goggles, () => HandleOption(MenuOption.Goggles) },
+            { MenuOption.GoggleReplacementLenses, () => HandleOption(MenuOption.GoggleReplacementLenses) },
+            { MenuOption.GoggleTearOffs, () => HandleOption(MenuOption.GoggleTearOffs) },
+            { MenuOption.GoggleRollOffs, () => HandleOption(MenuOption.GoggleRollOffs) },
+            { MenuOption.GoggleAccessories, () => HandleOption(MenuOption.GoggleAccessories) },
+            { MenuOption.KneeBraces, () => HandleOption(MenuOption.KneeBraces) },
+            { MenuOption.KneeGuards, () => HandleOption(MenuOption.KneeGuards) },
+            { MenuOption.ElbowGuards, () => HandleOption(MenuOption.ElbowGuards) },
+            { MenuOption.KidneyBelt, () => HandleOption(MenuOption.KidneyBelt) },
+            { MenuOption.RaceBoots, () => HandleOption(MenuOption.RaceBoots) },
+            { MenuOption.AdminMenu, ShowAdminMenu },
+            { MenuOption.LogOut, LogOut }
+         };
+      }
+
+      public async Task ExecuteMenuAction(MenuOption option)
+      {
+         try
+         {
+            if (_menuActions.TryGetValue(option, out var action))
+            {
+               await action();
+            }
+            else
+            {
+               await Task.Run(() => Console.WriteLine("Invalid option. Please try again."));
+            }
+         }
+         catch (Exception ex)
+         {
+            await Task.Run(() => Console.WriteLine($"An error occurred while executing the menu action: {ex.Message}"));
+            await _log.LogSelectionAsync($"Error: {ex.Message}");
+         }
+      }
+
+      private async Task HandleOption(MenuOption option)
+      {
+         try
+         {
+            await _handle.HandleOption(option, _selectionState);
+         }
+         catch (Exception ex)
+         {
+            await _log.LogSelectionAsync($"Error handling option {option}: {ex.Message}");
+            throw;
+         }
+      }
+
+      private async Task ShowAdminMenu()
+      {
+         await Task.Run(() => Console.WriteLine("Entering Admin Menu..."));
+         await _adminMenu.ShowAdminMenu(_selectionState);
+         await Task.Run(() => Console.WriteLine("Returning from Admin Menu..."));
+      }
+
+      private async Task LogOut()
+      {
+         try
+         {
+            await Task.Run(() => Console.WriteLine("Logging out..."));
+            await _log.LogSelectionAsync("User initiated log out.");
+            await LogToFileAsync("Logging out...");
+
+            await Task.Delay(1000); // Optional: Add a delay to simulate logging out process
+
+            // Force re-authentication by setting the authentication value to false
+            bool isAuthenticated = await _authService.SetAuthenticationState(false);
+
+            if (isAuthenticated)
+            {
+               await MainMenu.ShowMainMenu();
+               await _log.LogSelectionAsync("User successfully logged out.");
+               await LogToFileAsync("User successfully logged out.");
+            }
+            else
+            {
+               await Task.Run(() => Console.WriteLine("Authentication failed. Cannot log out."));
+               await _log.LogSelectionAsync("Authentication failed during log out.");
+               await LogToFileAsync("Authentication failed during log out.");
+            }
+         }
+         catch (Exception ex)
+         {
+            await Task.Run(() => Console.WriteLine($"An error occurred during log out: {ex.Message}"));
+            await _log.LogSelectionAsync($"Error during log out: {ex.Message}");
+            await LogToFileAsync($"Error during log out: {ex.Message}");
+         }
+      }
+
+      private async Task LogToFileAsync(string message)
+      {
+         string logFilePath = "A:\\Moto_List\\logout_log.txt";
+         using (StreamWriter writer = new StreamWriter(logFilePath, append: true))
+         {
+            await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+         }
+      }
+
+   }
+}

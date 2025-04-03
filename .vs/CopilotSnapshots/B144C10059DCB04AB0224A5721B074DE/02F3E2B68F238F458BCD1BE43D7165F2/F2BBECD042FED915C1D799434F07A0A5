@@ -1,0 +1,179 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Moto_List
+{
+   public class Menu
+   {
+      public enum MenuOption
+      {
+         GearBag,
+         Gloves,
+         ChestProtector,
+         NeckBrace,
+         HelmetBag,
+         Helmet,
+         GoggleBag,
+         Goggles,
+         GoggleReplacementLenses,
+         GoggleTearOffs,
+         GoggleRollOffs,
+         GoggleAccessories,
+         KneeBraces,
+         KneeGuards,
+         ElbowGuards,
+         KidneyBelt,
+         RaceBoots,
+         AdminMenu,
+         LogOut
+      }
+
+      Dictionary<MenuOption, bool> selectionState = Enum.GetValues(typeof(MenuOption))
+         .Cast<MenuOption>()
+         .ToDictionary(option => option, option => false);
+
+      public async Task ShowMenu()
+      {
+         while (true)
+         {
+            Console.Clear();
+            DisplayMainMenuOptions();
+            DisplayAdminLogoutOptions();
+
+            Console.Write("Please select an option: ");
+            string input = Console.ReadLine();
+
+            if (Enum.TryParse<MenuOption>(input, out var selectedOption) && Enum.IsDefined(typeof(MenuOption), selectedOption))
+            {
+               await ExecuteMenuAction(selectedOption);
+            }
+            else
+            {
+               Console.WriteLine("Invalid option. Please try again.");
+               Console.WriteLine("Press any key to continue...");
+               Console.ReadKey();
+            }
+         }
+      }
+
+      private void DisplayMainMenuOptions()
+      {
+         var mainMenuOptions = selectionState
+             .Where(entry => entry.Key != MenuOption.AdminMenu && entry.Key != MenuOption.LogOut)
+             .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+         string filePath = "A:\\Moto_List\\Menu2.options\\main_menu_options.txt";
+         DisplayMenuOptions.Show(mainMenuOptions, filePath);
+         DisplayMenuOptionsInConsole(mainMenuOptions);
+      }
+
+      private void DisplayMenuOptionsInConsole(Dictionary<MenuOption, bool> mainMenuOptions)
+      {
+         Console.WriteLine("MOTOCROSS READY – CHECKLIST");
+         Console.WriteLine("Ride Hard, Ride Safe!");
+         Console.WriteLine("**Rider Gear**");
+
+         foreach (var option in mainMenuOptions)
+         {
+            string status = option.Value ? "[✓]" : "[ ]";
+            Console.WriteLine($"{status} {(int)option.Key}. {option.Key}");
+         }
+
+         Console.WriteLine();
+         Console.WriteLine("[✓] **Bike Pre-Ride Check**");
+         Console.WriteLine("• Tire Pressure & Tread");
+         Console.WriteLine("• Chain & Sprocket Condition");
+         Console.WriteLine("• Brakes & Suspension");
+         Console.WriteLine("• Fluid Levels (Oil, Coolant)");
+         Console.WriteLine("• Battery & Electrical");
+      }
+
+      private void DisplayAdminLogoutOptions()
+      {
+         Console.WriteLine();
+         Console.WriteLine("Admin and Logout Options:");
+         Console.WriteLine($"{((int)MenuOption.AdminMenu) + 1}. AdminMenu");
+         Console.WriteLine($"{((int)MenuOption.LogOut) + 1}. LogOut");
+      }
+
+      private async Task ExecuteMenuAction(MenuOption option)
+      {
+         try
+         {
+            switch (option)
+            {
+               case MenuOption.GearBag:
+               case MenuOption.Gloves:
+               case MenuOption.ChestProtector:
+               case MenuOption.NeckBrace:
+               case MenuOption.HelmetBag:
+               case MenuOption.Helmet:
+               case MenuOption.GoggleBag:
+               case MenuOption.Goggles:
+               case MenuOption.GoggleReplacementLenses:
+               case MenuOption.GoggleTearOffs:
+               case MenuOption.GoggleRollOffs:
+               case MenuOption.GoggleAccessories:
+               case MenuOption.KneeBraces:
+               case MenuOption.KneeGuards:
+               case MenuOption.ElbowGuards:
+               case MenuOption.KidneyBelt:
+               case MenuOption.RaceBoots:
+                  await HandleOption(option);
+                  break;
+               case MenuOption.AdminMenu:
+                  Console.WriteLine("Entering Admin Menu...");
+                  await Moto_List.AdminMenu.ShowAdminMenu(selectionState);
+                  Console.WriteLine("Returning from Admin Menu...");
+                  break;
+               case MenuOption.LogOut:
+                  Console.WriteLine("Logging out...");
+                  await MainMenu.ShowMainMenu();
+                  break;
+               default:
+                  Console.WriteLine("Invalid option. Please try again.");
+                  break;
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred while executing the menu action: {ex.Message}");
+         }
+      }
+
+      private async Task HandleOption(MenuOption option)
+      {
+         try
+         {
+            selectionState[option] = !selectionState[option];
+
+            string message = selectionState[option] ? $"{option} selected." : $"{option} unselected.";
+            Console.WriteLine(message);
+            await LogSelectionAsync(message);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+         }
+      }
+
+      private async Task LogSelectionAsync(string message)
+      {
+         string logFilePath = "A:\\Moto_List\\Menu2.options\\selection_log.txt";
+         try
+         {
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+               await writer.WriteLineAsync($"{DateTime.Now}: {message}");
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"Failed to log selection: {ex.Message}");
+         }
+      }
+   }
+}

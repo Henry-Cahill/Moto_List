@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using static Moto_List.Menu2.options.List;
+using static Moto_List.Menu2.options.Menu;
+
+namespace Moto_List.Menu2.options
+{
+   public class MenuDisplay : IMenuDisplay
+   {
+      private const string Border = "┌─────────────────────────────────┐";
+      private const string Title = "│   MOTOCROSS READY - CHECKLIST   │";
+      private const string Subtitle = "│      Ride Hard, Ride Safe!      │";
+      private const string EmptyLine = "│                                 │";
+      private const string RiderGear = "│         **Rider Gear**          │";
+      private const string BikePreRideCheck = "│   [✓] **Bike Pre-Ride Check**   │";
+      private static readonly string[] BikePreRideCheckItems =
+      {
+            "│ - Tire Pressure & Tread         │",
+            "│ - Chain & Sprocket Condition    │",
+            "│ - Brakes & Suspension           │",
+            "│ - Fluid Levels (Oil, Coolant)   │",
+            "│ - Battery & Electrical          │"
+        };
+
+      public void DisplayMainMenuOptions(Dictionary<MenuOption, bool> selectionState)
+      {
+         var mainMenuOptions = selectionState
+             .Where(entry => entry.Key != MenuOption.AdminMenu && entry.Key != MenuOption.LogOut)
+             .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+         string filePath = "A:\\Moto_List\\Menu2\\main_menu_options.txt";
+         DisplayMenuOptions.Show(mainMenuOptions, filePath);
+         DisplayMenuOptionsInConsole(mainMenuOptions);
+      }
+
+      public void DisplayAdminLogoutOptions()
+      {
+         Console.WriteLine();
+         Console.WriteLine("Admin and Logout Options:");
+         Console.WriteLine($"{(int)MenuOption.AdminMenu}. AdminMenu");
+         Console.WriteLine($"{(int)MenuOption.LogOut}. LogOut");
+      }
+
+      private void DisplayMenuOptionsInConsole(Dictionary<MenuOption, bool> mainMenuOptions)
+      {
+         Console.WriteLine(Border);
+         Console.WriteLine(Title);
+         Console.WriteLine(Subtitle);
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(RiderGear);
+
+         foreach (var option in mainMenuOptions)
+         {
+            string status = option.Value ? "[✓]" : "[ ]";
+            Console.WriteLine($"│ {status} {(int)option.Key}. {option.Key.ToString().PadRight(25)}│");
+         }
+
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(BikePreRideCheck);
+         foreach (var item in BikePreRideCheckItems)
+         {
+            Console.WriteLine(item);
+         }
+         Console.WriteLine(EmptyLine);
+         Console.WriteLine(Border);
+      }
+   }
+}

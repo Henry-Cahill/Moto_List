@@ -1,0 +1,147 @@
+﻿using Moto_List.Menu2;
+using System;
+using System.Threading.Tasks;
+using static Moto_List.Menu2.Menu;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+
+namespace Moto_List
+{
+   class MainMenu
+   {
+      private static IServiceProvider _serviceProvider;
+
+      static async Task Main(string[] args)
+      {
+         ConfigureServices();
+         await ShowMainMenu();
+      }
+
+      private static void ConfigureServices()
+      {
+         var serviceCollection = new ServiceCollection();
+         serviceCollection.AddSingleton<ILog, Log>();
+         serviceCollection.AddSingleton<IHandle, Handle>();
+         serviceCollection.AddSingleton<IMenuDisplay, MenuDisplay>();
+         serviceCollection.AddSingleton<Menu>();
+         serviceCollection.AddSingleton<IAuthService, AuthService>();
+         serviceCollection.AddSingleton<AdminMenu>();
+         serviceCollection.AddSingleton<IConfiguration>(provider => new ConfigurationBuilder().AddJsonFile("A:\\Moto_List\\appsettings.json").Build());
+
+         _serviceProvider = serviceCollection.BuildServiceProvider();
+      }
+
+      public static async Task ShowMainMenu()
+      {
+         var log = _serviceProvider.GetService<ILog>();
+         var menu = _serviceProvider.GetService<Menu>();
+
+         while (true)
+         {
+            try
+            {
+               Console.Clear();
+               Console.WriteLine("Welcome to the Application");
+               Console.WriteLine("1. Login");
+               Console.WriteLine("2. Exit");
+               Console.Write("Please select an option: ");
+
+               string input = Console.ReadLine();
+               if (string.IsNullOrWhiteSpace(input))
+               {
+                  ConsoleHelper.DisplayInvalidOptionMessage();
+                  continue;
+               }
+
+               switch (input)
+               {
+                  case "1":
+                  case "Login":
+                     await Login(menu);
+                     break;
+                  case "2":
+                  case "Exit":
+                     Environment.Exit(0);
+                     break;
+                  default:
+                     ConsoleHelper.DisplayInvalidOptionMessage();
+                     break;
+               }
+            }
+            catch (Exception ex)
+            {
+               await log.LogSelectionAsync($"An error occurred in ShowMainMenu: {ex.Message}");
+               ConsoleHelper.DisplayErrorMessage();
+            }
+         }
+      }
+
+      static async Task Login(Menu menu)
+      {
+         var log = _serviceProvider.GetService<ILog>();
+         var authService = _serviceProvider.GetService<IAuthService>();
+         var adminMenu = _serviceProvider.GetService<AdminMenu>();
+
+         try
+         {
+            Console.Clear();
+            Console.Write("Enter username: ");
+            string username = Console.ReadLine();
+            Console.Write("Enter password: ");
+            string password = ReadPassword();
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+               Console.WriteLine("Username and password cannot be empty. Please try again.");
+               Console.WriteLine("Press any key to continue...");
+               Console.ReadKey();
+               return;
+            }
+
+            if (await authService.Authenticate(username, password))
+            {
+               Console.WriteLine("Login successful!");
+               await log.LogSelectionAsync("User logged in successfully.");
+               await menu.ShowMenu();
+               await adminMenu.ShowAdminMenu(new Dictionary<List.MenuOption, bool>());
+               await MainMenu.ShowMainMenu(); // Add this line to return to the main menu
+            }
+            else
+            {
+               Console.WriteLine("Invalid credentials. Please try again.");
+               Console.WriteLine("Press any key to continue...");
+               Console.ReadKey();
+            }
+         }
+         catch (Exception ex)
+         {
+            await log.LogSelectionAsync($"An error occurred during login: {ex.Message}");
+            ConsoleHelper.DisplayErrorMessage();
+         }
+      }
+
+      static string ReadPassword()
+      {
+         string password = string.Empty;
+         ConsoleKey key;
+         do
+         {
+            var keyInfo = Console.ReadKey(intercept: true);
+            key = keyInfo.Key;
+
+            if (key == ConsoleKey.Backspace && password.Length > 0)
+            {
+               Console.Write("\b \b");
+               password = password[0..^1];
+            }
+            else if (!char.IsControl(keyInfo.KeyChar))
+            {
+               Console.Write("*");
+               password += keyInfo.KeyChar;
+            }
+         } while (key != ConsoleKey.Enter);
+         Console.WriteLine();
+         return password;
+      }
+   }
+}

@@ -1,0 +1,117 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static Moto_List.Menu2.options.List;
+using static Moto_List.Menu2.options.Menu;
+
+namespace Moto_List.Menu2.options
+{
+   public class Menu : IExeMenuAction
+   {
+      Menu2.options.List.MenuOption _menuOption;
+
+      private readonly Dictionary<MenuOption, bool> _selectionState;
+      public readonly ILog _log;
+      private readonly IHandle _handle;
+      private readonly IMenuDisplay _menuDisplay;
+      private readonly AdminMenu _adminMenu;
+
+      public Menu(ILog log, IHandle handle, IMenuDisplay menuDisplay, AdminMenu adminMenu)
+      {
+         _log = log ?? throw new ArgumentNullException(nameof(log));
+         _handle = handle ?? throw new ArgumentNullException(nameof(handle));
+         _menuDisplay = menuDisplay ?? throw new ArgumentNullException(nameof(menuDisplay));
+         _adminMenu = adminMenu ?? throw new ArgumentNullException(nameof(adminMenu));
+         _selectionState = Enum.GetValues(typeof(MenuOption))
+             .Cast<MenuOption>()
+             .ToDictionary(option => option, option => false);
+      }
+
+      public async Task ShowMenu()
+      {
+         while (true)
+         {
+            try
+            {
+               Console.Clear();
+               _menuDisplay.DisplayMainMenuOptions(_selectionState);
+               _menuDisplay.DisplayAdminLogoutOptions();
+
+               Console.Write("Please select an option: ");
+               string input = Console.ReadLine();
+
+               if (Enum.TryParse<MenuOption>(input, out var selectedOption) && Enum.IsDefined(typeof(MenuOption), selectedOption))
+               {
+                  if (selectedOption == MenuOption.AdminMenu)
+                  {
+                     await _adminMenu.ShowAdminMenu(_selectionState);
+                  }
+                  else
+                  {
+                     await ExecuteMenuAction(selectedOption);
+                  }
+               }
+               else
+               {
+                  DisplayInvalidOptionMessage();
+               }
+            }
+            catch (Exception ex)
+            {
+               await _log.LogSelectionAsync($"An error occurred in ShowMenu: {ex.Message}");
+               DisplayErrorMessage();
+            }
+         }
+      }
+
+      public async Task ExecuteMenuAction(MenuOption option)
+      {
+         try
+         {
+            await _log.LogSelectionAsync($"Selected option: {option}");
+            await _handle.HandleOption(option, _selectionState);
+         }
+         catch (Exception ex)
+         {
+            await _log.LogSelectionAsync($"An error occurred while executing menu action: {ex.Message}");
+            DisplayErrorMessage();
+         }
+      }
+
+      private void DisplayInvalidOptionMessage()
+      {
+         Console.WriteLine("Invalid option. Please try again.");
+         Console.WriteLine("Press any key to continue...");
+         Console.ReadKey();
+      }
+
+      private void DisplayErrorMessage()
+      {
+         Console.WriteLine("An unexpected error occurred. Please try again.");
+         Console.WriteLine("Press any key to continue...");
+         Console.ReadKey();
+      }
+
+      public interface IExeMenuAction
+      {
+         Task ExecuteMenuAction(MenuOption option);
+      }
+
+      public interface ILog
+      {
+         Task LogSelectionAsync(string message);
+      }
+
+      public interface IHandle
+      {
+         Task HandleOption(MenuOption option, Dictionary<MenuOption, bool> selectionState);
+      }
+
+      public interface IMenuDisplay
+      {
+         void DisplayMainMenuOptions(Dictionary<MenuOption, bool> selectionState);
+         void DisplayAdminLogoutOptions();
+      }
+   }
+}

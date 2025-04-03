@@ -1,0 +1,31 @@
+┌─────────────────────────────────┐
+│   MOTOCROSS READY – CHECKLIST   │
+│      Ride Hard, Ride Safe!      │
+│                                 │
+│         **Rider Gear**          │
+│ [✓] 0. GearBag                   │
+│ [✓] 1. Gloves                    │
+│ [✓] 2. ChestProtector            │
+│ [✓] 3. NeckBrace                 │
+│ [✓] 4. HelmetBag                 │
+│ [✓] 5. Helmet                    │
+│ [✓] 6. GoggleBag                 │
+│ [✓] 7. Goggles                   │
+│ [✓] 8. GoggleReplacementLenses   │
+│ [✓] 9. GoggleTearOffs            │
+│ [✓] 10. GoggleRollOffs           │
+│ [✓] 11. GoggleAccessories        │
+│ [✓] 12. KneeBraces               │
+│ [✓] 13. KneeGuards               │
+│ [✓] 14. ElbowGuards              │
+│ [✓] 15. KidneyBelt               │
+│ [✓] 16. RaceBoots                │
+│                                 │
+│   [✓] **Bike Pre-Ride Check**   │
+│ • Tire Pressure & Tread          │
+│ • Chain & Sprocket Condition     │
+│ • Brakes & Suspension            │
+│ • Fluid Levels (Oil, Coolant)    │
+│ • Battery & Electrical           │
+│                                 │
+┌─────────────────────────────────┐

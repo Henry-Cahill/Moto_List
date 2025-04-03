@@ -1,0 +1,20 @@
+﻿using System.Threading.Tasks;
+
+namespace Moto_List
+{
+   public interface IAuthService
+   {
+      Task<bool> Authenticate(string username, string password);
+   }
+
+   public class AuthService : IAuthService
+   {
+      public async Task<bool> Authenticate(string username, string password)
+      {
+         // Simulate authentication logic
+         await Task.Delay(100); // Simulate async work
+         return username == "admin" && password == "password";
+      }
+   }
+}
+
