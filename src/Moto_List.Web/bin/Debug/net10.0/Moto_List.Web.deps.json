@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Moto_List.Web/1.0.0": {
+        "dependencies": {
+          "Moto_List.Shared": "1.0.0"
+        },
+        "runtime": {
+          "Moto_List.Web.dll": {}
+        }
+      },
+      "Moto_List.Shared/1.0.0": {
+        "runtime": {
+          "Moto_List.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Moto_List.Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Moto_List.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

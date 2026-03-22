@@ -1,0 +1,48 @@
+@page
+@model Moto_List.Web.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center" style="margin-top: 4rem;">
+    <div class="col-md-5 col-lg-4">
+        <div class="auth-card card">
+            <div class="card-body">
+                <div class="auth-header">
+                    <i class="bi bi-person-plus"></i>
+                    <h3>Create Account</h3>
+                    <p style="color: var(--text-muted); margin: 0;">Join the Moto List community</p>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle me-1"></i> @Model.ErrorMessage
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Input.Username" class="form-label">Username</label>
+                        <input asp-for="Input.Username" class="form-control" placeholder="Choose a username" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Email" class="form-label">Email</label>
+                        <input asp-for="Input.Email" type="email" class="form-control" placeholder="you@example.com" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Password" class="form-label">Password</label>
+                        <input asp-for="Input.Password" type="password" class="form-control" placeholder="Create a strong password" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">
+                        <i class="bi bi-person-plus me-1"></i> Create Account
+                    </button>
+                </form>
+
+                <p class="text-center mt-3" style="color: var(--text-muted);">
+                    Already have an account? <a asp-page="/Account/Login" style="color: var(--primary); font-weight: 600;">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

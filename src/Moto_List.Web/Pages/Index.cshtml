@@ -1,0 +1,61 @@
+@page
+@model Moto_List.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero">
+    <h1><i class="bi bi-bicycle"></i> Moto List</h1>
+    <p class="lead">
+        Stay organized and never forget a thing for your motocross adventure.
+        Track gear, tools, and safety essentials with your personal checklist.
+    </p>
+
+    @if (Model.IsLoggedIn)
+    {
+        <a asp-page="/Checklist/Index" class="btn btn-moto btn-lg mt-3">
+            <i class="bi bi-list-check"></i> Go to My Checklist
+        </a>
+    }
+    else
+    {
+        <div class="mt-4">
+            <a asp-page="/Account/Login" class="btn btn-moto btn-lg me-2">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+            <a asp-page="/Account/Register" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-person-plus"></i> Register
+            </a>
+        </div>
+    }
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4 fade-in-up">
+        <div class="feature-card">
+            <div class="feature-icon safety">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h5>Safety First</h5>
+            <p>Never forget essential safety gear for your ride.</p>
+        </div>
+    </div>
+    <div class="col-md-4 fade-in-up">
+        <div class="feature-card">
+            <div class="feature-icon tools">
+                <i class="bi bi-tools"></i>
+            </div>
+            <h5>Tools &amp; Parts</h5>
+            <p>Track all the tools and spare parts you need.</p>
+        </div>
+    </div>
+    <div class="col-md-4 fade-in-up">
+        <div class="feature-card">
+            <div class="feature-icon check">
+                <i class="bi bi-check2-all"></i>
+            </div>
+            <h5>Check It Off</h5>
+            <p>Mark items as packed and ride with confidence.</p>
+        </div>
+    </div>
+</div>

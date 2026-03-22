@@ -1,0 +1,9 @@
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Web
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\appsettings.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\appsettings.Production.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Web.dll
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Web.deps.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Web.runtimeconfig.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Web.pdb
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Shared.dll
+C:\Users\hlcma\Documents\GitHub\Moto_List\publish\web\Moto_List.Shared.pdb

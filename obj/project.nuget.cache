@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "K+C2ZcHIhww=",
+  "dgSpecHash": "5uoQO4m4/74=",
   "success": true,
-  "projectFilePath": "A:\\Moto_List\\Moto_List.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\hlcma\\Documents\\GitHub\\Moto_List\\Moto_List.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hlcma\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\hlcma\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\hlcma\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\hlcma\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.23\\microsoft.netcore.app.host.win-x64.8.0.23.nupkg.sha512"
+  ],
   "logs": []
 }

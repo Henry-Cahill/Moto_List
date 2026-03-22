@@ -1,0 +1,12 @@
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\bin\Debug\net10.0\Moto_List.Shared.deps.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\bin\Debug\net10.0\Moto_List.Shared.dll
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\bin\Debug\net10.0\Moto_List.Shared.pdb
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.AssemblyInfoInputs.cache
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.AssemblyInfo.cs
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.csproj.CoreCompileInputs.cache
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.sourcelink.json
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.dll
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\refint\Moto_List.Shared.dll
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\Moto_List.Shared.pdb
+C:\Users\hlcma\Documents\GitHub\Moto_List\src\Moto_List.Shared\obj\Debug\net10.0\ref\Moto_List.Shared.dll

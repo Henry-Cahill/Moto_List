@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/publish/
+**/.vs/
+**/.git/
+**/node_modules/
+**/*.user
+**/deploy/
+**/Form_Authentication*
+**/Moto_List.csproj
+**/Program.cs
+!src/**/Program.cs
